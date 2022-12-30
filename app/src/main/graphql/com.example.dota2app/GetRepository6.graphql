@@ -1,0 +1,78 @@
+query DotaVsQueryfive($matchLimit: Int) {
+  heroStats {
+    m98: heroVsHeroMatchup(heroId: 98, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m99: heroVsHeroMatchup(heroId: 99, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m100: heroVsHeroMatchup(heroId: 100, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m101: heroVsHeroMatchup(heroId: 101, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m102: heroVsHeroMatchup(heroId: 102, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m103: heroVsHeroMatchup(heroId: 103, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m104: heroVsHeroMatchup(heroId: 104, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m105: heroVsHeroMatchup(heroId: 105, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m106: heroVsHeroMatchup(heroId: 106, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m107: heroVsHeroMatchup(heroId: 107, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m108: heroVsHeroMatchup(heroId: 108, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m109: heroVsHeroMatchup(heroId: 109, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m110: heroVsHeroMatchup(heroId: 110, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m111: heroVsHeroMatchup(heroId: 111, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m112: heroVsHeroMatchup(heroId: 112, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m113: heroVsHeroMatchup(heroId: 113, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m114: heroVsHeroMatchup(heroId: 114, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m119: heroVsHeroMatchup(heroId: 119, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m120: heroVsHeroMatchup(heroId: 120, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m121: heroVsHeroMatchup(heroId: 121, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+
+    m123: heroVsHeroMatchup(heroId: 123, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m126: heroVsHeroMatchup(heroId: 126, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m128: heroVsHeroMatchup(heroId: 128, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m129: heroVsHeroMatchup(heroId: 129, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+  }
+}
+

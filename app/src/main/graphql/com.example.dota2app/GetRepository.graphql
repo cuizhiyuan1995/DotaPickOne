@@ -1,0 +1,44 @@
+query DotaAppQuery($matchLimit: Int) {
+  heroStats {
+    winWeek(take:1) {
+      heroId
+      winCount
+      matchCount
+    }
+    m135: heroVsHeroMatchup(heroId: 135, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m136: heroVsHeroMatchup(heroId: 136, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m137: heroVsHeroMatchup(heroId: 137, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+  }
+  constants {
+    heroes {
+        id
+        displayName
+    }
+  }
+}
+
+
+fragment advan_disadvan on HeroMatchupType {
+  advantage {
+    heroId
+    with {
+      heroId1
+      heroId2
+      matchCount
+      winCount
+    }
+    vs {
+      heroId1
+      heroId2
+      matchCount
+      winCount
+    }
+  }
+}
+

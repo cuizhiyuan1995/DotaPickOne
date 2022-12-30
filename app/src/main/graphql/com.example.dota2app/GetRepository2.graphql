@@ -1,0 +1,76 @@
+query DotaVsQueryone($matchLimit: Int) {
+  heroStats {
+    m1: heroVsHeroMatchup(heroId: 1, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m2: heroVsHeroMatchup(heroId: 2, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m3: heroVsHeroMatchup(heroId: 3, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m4: heroVsHeroMatchup(heroId: 4, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m5: heroVsHeroMatchup(heroId: 5, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m6: heroVsHeroMatchup(heroId: 6, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m7: heroVsHeroMatchup(heroId: 7, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m8: heroVsHeroMatchup(heroId: 8, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m9: heroVsHeroMatchup(heroId: 9, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m10: heroVsHeroMatchup(heroId: 10, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m11: heroVsHeroMatchup(heroId: 11, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m12: heroVsHeroMatchup(heroId: 12, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m13: heroVsHeroMatchup(heroId: 13, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m14: heroVsHeroMatchup(heroId: 14, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m15: heroVsHeroMatchup(heroId: 15, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m16: heroVsHeroMatchup(heroId: 16, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m17: heroVsHeroMatchup(heroId: 17, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m18: heroVsHeroMatchup(heroId: 18, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m19: heroVsHeroMatchup(heroId: 19, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m20: heroVsHeroMatchup(heroId: 20, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m21: heroVsHeroMatchup(heroId: 21, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m22: heroVsHeroMatchup(heroId: 22, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m23: heroVsHeroMatchup(heroId: 23, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+    m25: heroVsHeroMatchup(heroId: 25, matchLimit: $matchLimit) {
+        ...advan_disadvan
+    }
+  }
+}

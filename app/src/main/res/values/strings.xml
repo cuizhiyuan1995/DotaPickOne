@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">PickOne</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Winrate</string>
+    <string name="title_notifications">Settings</string>
+    <string name="title_about">About</string>
+    <string name="title_versionlog">Version Log</string>
+    <string name="email">dotapickone@gmail.com</string>
+    <string name="about_acknowledgement">Powered by STRATZ</string>
+    <string name="stratz_api">
+        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJodHRwczovL3N0ZWFtY29tbXVuaXR5LmNvbS9vcGVuaWQvaWQvNzY1NjExOTgxMjg1MjgwNzgiLCJ1bmlxdWVfbmFtZSI6InVuYmVhcmFibGVodW5nZXImdGhyaXN0IiwiU3ViamVjdCI6IjMzMmJmMzEzLWI5NjUtNDNhMi05ODA2LTY1NjAxNTIyZTgyYSIsIlN0ZWFtSWQiOiIxNjgyNjIzNTAiLCJuYmYiOjE2NzAxOTg0MTIsImV4cCI6MTcwMTczNDQxMiwiaWF0IjoxNjcwMTk4NDEyLCJpc3MiOiJodHRwczovL2FwaS5zdHJhdHouY29tIn0.LRCSkUwKLuARe5Uq3LXklyCmCSFu_XB6ZCbOUIAse8E
+    </string>
+    <string name="intro_skip">SKIP</string>
+    <string name="intro_next">NEXT</string>
+    <string name="intro_finish">DONE</string>
+
+    <string name="intro_home">1. tap RADIANT(YOU) to choose teammates\n2. tap DIRE(ENEMY) to choose opponents\n3. tap hero cards to choose heroes\n4. tap Winrate tab for results</string>
+
+    <string name="intro_Winrate">
+        1. tap Name to sort results by names\n2. tap Winrate to sort results by Winrate\n3. tap Rate to sort results by calculated rates
+    </string>
+
+    <string name="intro_Settings">
+        1. tap about for contact,version and acknowledgement
+    </string>
+
+
+    <string name="rate_help">
+        How much winrate will increase when considering cooperation and counter relationship
+    </string>
+
+
+</resources>

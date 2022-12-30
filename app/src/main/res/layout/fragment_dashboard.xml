@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/text_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:visibility="gone"/>
+
+
+    <!-- These are headers for the row layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp">
+
+        <TextView
+            android:id="@+id/heroname_icon"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hero"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/stratzid_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StratzId"
+            android:textSize="15sp"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/heroname_linearlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/heroname_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/heroname_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/herowinrate_linearlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:paddingHorizontal="5dp">
+
+            <TextView
+                android:id="@+id/Herowinrate_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Winrate"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/winrate_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/Heroindex_linearlayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:paddingHorizontal="5dp">
+
+            <TextView
+                android:id="@+id/Heroindex_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rate"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/rate_sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/ic_baseline_keyboard_arrow_down_24" />
+
+            <ImageView
+                android:id="@+id/rate_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/ic_baseline_help_outline_24" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sortlist"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        />
+
+</LinearLayout>
