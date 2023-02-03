@@ -185,6 +185,7 @@ class HomeFragment : Fragment() {
     private fun setblankslot(){
         val resId = requireContext().resources.getIdentifier("blankimage", "drawable", requireContext().packageName)
         val currbitmap = BitmapFactory.decodeResource(resources,resId)
+        Log.d(javaClass.simpleName,"blankbitmap null or not: " + (currbitmap == null).toString())
         viewModel.addblankbitmap(currbitmap)
         binding.imageView.setImageBitmap(currbitmap)
         binding.imageView6.setImageBitmap(currbitmap)

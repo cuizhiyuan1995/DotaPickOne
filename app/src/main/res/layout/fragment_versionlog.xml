@@ -5,6 +5,54 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/version_tab_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/version_number_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v95.1.2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_size" />
+
+        <TextView
+            android:id="@+id/version_date_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01/02/2023"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_size" />
+
+        <TextView
+            android:id="@+id/version_number_2_feature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bug Fix"
+            android:textColor="@color/black"
+            android:textSize="@dimen/setting_size" />
+
+        <TextView
+            android:id="@+id/version_number_2_text_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="fix crash issue caused by failing to load images"
+            android:textColor="@color/deep_gray"
+            android:textSize="@dimen/setting_size" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:orientation="vertical" />
+
+    <LinearLayout
         android:id="@+id/version_tab_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
