@@ -130,5 +130,6 @@ data class Herowith (
     @ColumnInfo(name = "129") val w129: Float,
     @ColumnInfo(name = "135") val w135: Float,
     @ColumnInfo(name = "136") val w136: Float,
-    @ColumnInfo(name = "137") val w137: Float
+    @ColumnInfo(name = "137") val w137: Float,
+    @ColumnInfo(name = "138") val w138: Float
 )

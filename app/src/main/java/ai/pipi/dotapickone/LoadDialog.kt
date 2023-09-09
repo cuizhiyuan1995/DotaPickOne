@@ -1,29 +1,50 @@
-package ai.pipi.dotapickone
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.*
+import androidx.compose.ui.tooling.*
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
-import android.app.Activity
-import android.app.AlertDialog
-import ai.pipi.dotapickone.databinding.CustomLoadingBinding
-
-
-class LoadingDialog(input_activity: Activity) {
-    private var activity = input_activity
-    private lateinit var alertDialog : AlertDialog
-    private lateinit var binding: CustomLoadingBinding
-
-    fun startLoadingDiaglog(){
-        val builder = AlertDialog.Builder(activity)
-        val inflater = activity.layoutInflater
-        binding = CustomLoadingBinding.inflate(inflater)
-        builder.setView(binding.root)
-        //builder.setView(inflater.inflate(R.layout.custom_loading,null))
-        builder.setCancelable(false)
-        alertDialog = builder.create()
-        alertDialog.show()
+@Preview
+@Composable
+fun RawLoadingdialog(){
+    Dialog(
+        onDismissRequest = {  },
+        DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false)
+    ) {
+        Box(
+            contentAlignment= Alignment.Center,
+            modifier = Modifier
+                .size(100.dp)
+                .background(Color.White, shape = RoundedCornerShape(8.dp))
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                CircularProgressIndicator()
+                Text(text = "Loading...")
+            }
+        }
     }
-
-    fun dismissLoadingDialog(){
-        alertDialog.dismiss()
-    }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+

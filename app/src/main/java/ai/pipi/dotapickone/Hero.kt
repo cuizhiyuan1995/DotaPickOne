@@ -66,6 +66,7 @@ class Hero {
             "Mirana",
             "Monkey_King",
             "Morphling",
+            "Muerta",
             "Naga_Siren",
             "Nature_s_Prophet",
             "Necrophos",
@@ -134,5 +135,8 @@ class Hero {
     }
     fun getpicname(index:Int): String{
         return herolist[index] + "_icon.png"
+    }
+    fun getlength(): Int{
+        return herolist.size
     }
 }

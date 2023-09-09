@@ -9,15 +9,25 @@ import java.util.*
 
 
 class MainViewModel: ViewModel() {
-    private var bitmaps :MutableList<Bitmap> = mutableListOf()
-    private var radiantordire: MutableLiveData<Boolean> = MutableLiveData(true)
+    private var bitmaps :MutableList<Int> = mutableListOf()
+    private var _radiantordire: MutableLiveData<Boolean> = MutableLiveData(true)
     private var rcount : PriorityQueue<Int> = PriorityQueue<Int>()
     private var dcount : PriorityQueue<Int> = PriorityQueue<Int>()
-    private var rtapat = MutableLiveData(-1)
-    private var dtapat = MutableLiveData(-1)
+    private var _rtapat = MutableLiveData(-1)
+    private var _dtapat = MutableLiveData(-1)
     private var tappedposition : Int = 0
     private lateinit var blankbitmap: Bitmap
     private var heroinslot : MutableList<Int> = mutableListOf()
+    private var lastfetchdate : Int = -1
+
+    val rtapat: LiveData<Int>
+        get() = _rtapat
+
+    val dtapat: LiveData<Int>
+        get() = _dtapat
+
+    val rord: LiveData<Boolean>
+        get() = _radiantordire
 
     init{
         rcount.add(2)
@@ -33,11 +43,11 @@ class MainViewModel: ViewModel() {
     }
 
 
-    fun addbitmap(bitmap:Bitmap){
+    fun addbitmap(bitmap:Int){
         bitmaps.add(bitmap)
     }
 
-    fun getallbitmaps():MutableList<Bitmap>{
+    fun getallbitmaps():MutableList<Int>{
         return bitmaps
     }
 
@@ -45,12 +55,13 @@ class MainViewModel: ViewModel() {
         return bitmaps.size
     }
 
-    fun getbitmapatposition(position:Int): Bitmap{
+    fun getbitmapatposition(position:Int): Int{
         return bitmaps[position]
     }
 
     fun setradiantordire(rord:Boolean){
-        radiantordire.postValue(rord)
+        _radiantordire.postValue(rord)
+        Log.d(javaClass.simpleName,"radiant tapped")
     }
 
     fun gettappedposition():Int{
@@ -58,14 +69,18 @@ class MainViewModel: ViewModel() {
     }
 
     fun addtorcount(slot:Int){
-        rcount.add(slot)
-        heroinslot.set(slot - 1, -1)
-        Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
+        if(slot !in rcount){
+            rcount.add(slot)
+            heroinslot.set(slot - 1, -1)
+            Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
+        }
     }
     fun addtodcount(slot:Int){
-        dcount.add(slot)
-        heroinslot.set(slot - 1, -1)
-        Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
+        if(slot !in dcount){
+            dcount.add(slot)
+            heroinslot.set(slot - 1, -1)
+            Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
+        }
     }
 
     fun addblankbitmap(image:Bitmap){
@@ -81,14 +96,31 @@ class MainViewModel: ViewModel() {
     }
 
     fun observeRtap(): LiveData<Int>{
-        return rtapat
+        return _rtapat
     }
     fun observeDtap(): LiveData<Int>{
-        return dtapat
+        return _dtapat
     }
 
+    fun updateRtap(newValue: Int) {
+        _rtapat.value = newValue
+    }
+
+    fun updateDtap(newValue: Int) {
+        _dtapat.value = newValue
+    }
+
+
     fun observerord(): LiveData<Boolean>{
-        return radiantordire
+        return _radiantordire
+    }
+
+    fun setlastfetchdate(date:Int){
+        lastfetchdate = date
+    }
+
+    fun getlastfetchdate():Int{
+        return lastfetchdate
     }
 
     fun imagetapped(position: Int){
@@ -99,12 +131,12 @@ class MainViewModel: ViewModel() {
         }
         else{
             Log.d(javaClass.simpleName,"imagetappedat: " + position)
-            if(radiantordire.value == true){
+            if(_radiantordire.value == true){
                 if(rcount.isNotEmpty()){
                     tappedposition = position
                     heroinslot[rcount.peek() - 1] = position
                     Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
-                    rtapat.postValue(rcount.poll())
+                    _rtapat.postValue(rcount.poll())
                 }
             }
             else{
@@ -112,7 +144,7 @@ class MainViewModel: ViewModel() {
                     tappedposition = position
                     heroinslot[dcount.peek() - 1] = position
                     Log.d(javaClass.simpleName,"heroinslot: " + heroinslot.toString())
-                    dtapat.postValue(dcount.poll())
+                    _dtapat.postValue(dcount.poll())
                 }
             }
         }
