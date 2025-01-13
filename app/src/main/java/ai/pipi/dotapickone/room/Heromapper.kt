@@ -11,7 +11,7 @@ data class Herowinrates(val herowinrates: List<Herowinrate?>)
 
 data class Herowiths(val herowiths: List<Herowith?>)
 data class Herovss(val herovss: List<Herovs?>)
-const val heroidcounts = 139
+const val heroidcounts = 146
 
 fun DotaAppQuery.Hero.toHeroname() = Heroname(
     stratzId = id as Int,
@@ -46,19 +46,23 @@ fun DotaAppQuery.HeroStats.toHerowinrates() = winWeek?.let {
 
 fun DotaAppQuery.HeroStats.toHerowiths():Herowiths{
     val herowithlist = mutableListOf<Herowith>()
+    herowithlist.add(toHerowith(m131?.advan_disadvan?.advantage?.get(0)))
     herowithlist.add(toHerowith(m135?.advan_disadvan?.advantage?.get(0)))
     herowithlist.add(toHerowith(m136?.advan_disadvan?.advantage?.get(0)))
     herowithlist.add(toHerowith(m137?.advan_disadvan?.advantage?.get(0)))
     herowithlist.add(toHerowith(m138?.advan_disadvan?.advantage?.get(0)))
+    herowithlist.add(toHerowith(m145?.advan_disadvan?.advantage?.get(0)))
     return Herowiths(herowiths = herowithlist)
 }
 
 fun DotaAppQuery.HeroStats.toHerovss():Herovss{
     val herovslist = mutableListOf<Herovs>()
+    herovslist.add(toHerovs(m131?.advan_disadvan?.advantage?.get(0)))
     herovslist.add(toHerovs(m135?.advan_disadvan?.advantage?.get(0)))
     herovslist.add(toHerovs(m136?.advan_disadvan?.advantage?.get(0)))
     herovslist.add(toHerovs(m137?.advan_disadvan?.advantage?.get(0)))
     herovslist.add(toHerovs(m138?.advan_disadvan?.advantage?.get(0)))
+    herovslist.add(toHerovs(m145?.advan_disadvan?.advantage?.get(0)))
     return Herovss(herovss = herovslist)
 }
 
@@ -496,10 +500,12 @@ private fun toHerowith(advantage: Advan_disadvan.Advantage?):Herowith{
         w126 = winratelist[126],
         w128 = winratelist[128],
         w129 = winratelist[129],
+        w131 = winratelist[131],
         w135 = winratelist[135],
         w136 = winratelist[136],
         w137 = winratelist[137],
-        w138 = winratelist[138]
+        w138 = winratelist[138],
+        w145 = winratelist[145]
     )
 }
 
@@ -640,10 +646,12 @@ private fun toHerovs(advantage: Advan_disadvan.Advantage?):Herovs{
         w126 = winratelist[126],
         w128 = winratelist[128],
         w129 = winratelist[129],
+        w131 = winratelist[131],
         w135 = winratelist[135],
         w136 = winratelist[136],
         w137 = winratelist[137],
-        w138 = winratelist[138]
+        w138 = winratelist[138],
+        w145 = winratelist[145]
     )
 }
 
@@ -771,10 +779,12 @@ fun Herowith.tolist():List<Float>{
     returnlist.add(w126)
     returnlist.add(w128)
     returnlist.add(w129)
+    returnlist.add(w131)
     returnlist.add(w135)
     returnlist.add(w136)
     returnlist.add(w137)
     returnlist.add(w138)
+    returnlist.add(w145)
     return returnlist
 }
 
@@ -900,9 +910,11 @@ fun Herovs.tolist():List<Float>{
     returnlist.add(w126)
     returnlist.add(w128)
     returnlist.add(w129)
+    returnlist.add(w131)
     returnlist.add(w135)
     returnlist.add(w136)
     returnlist.add(w137)
     returnlist.add(w138)
+    returnlist.add(w145)
     return returnlist
 }

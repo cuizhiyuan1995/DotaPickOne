@@ -1,6 +1,7 @@
 package ai.pipi.dotapickone.ui.dashboard
 
 import ai.pipi.dotapickone.DotaAppQuery
+import ai.pipi.dotapickone.Hero
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
@@ -66,9 +67,10 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     //private val herovsmatrix = mutableListOf<List<Float>>()
     //private lateinit var herovsmultik : D2Array<Float>
     //private var herowinratevector = listOf<Float>()
+    private val herocounts = Hero().getlength()
     private lateinit var herowinratemultik : D1Array<Float>
-    private val onemultik = mk.ones<Float>(124,124)
-    private val onelinemultik = mk.ones<Float>(124)
+    private val onemultik = mk.ones<Float>(herocounts,herocounts)
+    private val onelinemultik = mk.ones<Float>(herocounts)
     private lateinit var coordinateindex : D2Array<Float>
     private lateinit var counterindex : D2Array<Float>
 
@@ -278,6 +280,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         //calculate Ratio of two heros as opponent
         val herovss = herovsDao.getAll()
         val herovsmatrix = mutableListOf<List<Float>>()
+        Log.d(javaClass.simpleName,"herovssize:" + herovss.size)
         for(herovs in herovss){
             herovsmatrix.add(herovs.tolist())
         }
@@ -295,8 +298,8 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         Log.d(javaClass.simpleName,"winratemultikcomplete,size: " + herowinratemultik.shape.get(0))
 
         //calculate Ratio_i * Ratio_j matrix
-        val winratearray = Array(124){herowinratevector.toFloatArray()}
-        val winratecolarray = Array(124) { i -> FloatArray(124){herowinratevector.get(i)} }
+        val winratearray = Array(herocounts){herowinratevector.toFloatArray()}
+        val winratecolarray = Array(herocounts) { i -> FloatArray(herocounts){herowinratevector.get(i)} }
         var winratemultik = mk.ndarray(winratearray)
         var winratecolmultik = mk.ndarray(winratecolarray)
         winratemultik = onemultik/winratemultik - onemultik             //every row is herowinrate ratio
@@ -365,19 +368,19 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         var result_noindex = herowinratemultik.copy()
         for(sorder in rlist_sorder){
             val temp = herowinratemultik[sorder]
-            val Ratio_sorder = mk.d1array(124){temp}
+            val Ratio_sorder = mk.d1array(herocounts){temp}
             //println(Ratio_sorder)
             result = result * Ratio_sorder
             result_noindex = result_noindex * Ratio_sorder
-            result = result * coordinateindex[0..124,sorder]
+            result = result * coordinateindex[0..herocounts,sorder]
         }
         for(sorder in dlist_sorder){
             val temp = herowinratemultik[sorder]
-            val Ratio_sorder = mk.d1array(124){temp}
+            val Ratio_sorder = mk.d1array(herocounts){temp}
             //println(Ratio_sorder)
             result = result / Ratio_sorder
             result_noindex = result_noindex / Ratio_sorder
-            result = result * counterindex[0..124,sorder]
+            result = result * counterindex[0..herocounts,sorder]
         }
         //change losewin ration to winrate,calculate index store in result_noindex
         result_noindex = (result_noindex - result)/(result + onelinemultik)
@@ -395,6 +398,8 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
             for((count, heroname) in heronames.withIndex()){
                 heroname.predicted_winrate = list1[count]
                 heroname.withvs_index = list2[count]
+                //Log.d(javaClass.simpleName,"updateid${count}: " + heroname.stratzId)
+                //Log.d(javaClass.simpleName,"updatehero${count}: " + heroname.displayName)
                 //Log.d(javaClass.simpleName,"updatewinrate${count}: " + heroname.predicted_winrate)
                 //Log.d(javaClass.simpleName,"updateindex${count}: " + heroname.withvs_index)
                 heronameDao.updateHeroname(heroname)

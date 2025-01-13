@@ -38,6 +38,48 @@ fun Versionlog(
                     .padding(padding)
                 //.fillMaxWidth()
             ){
+                Text(text = "v95.3.0",fontSize = fontsize)
+                Text(text = "01/12/2025",fontSize = fontsize)
+                Text(text = "Bug Fix",fontSize = fontsize)
+                Text(text = "fix crash, add Kez and Ringmaster",fontSize = fontsize, color = Color.Gray)
+            }
+        }
+        //end of version block
+
+        Divider(color = Color.LightGray, thickness = 4.dp)
+
+        //version block
+        Column(
+            Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+        ) {
+            Column(
+                Modifier
+                    .padding(padding)
+                //.fillMaxWidth()
+            ){
+                Text(text = "v95.2.2",fontSize = fontsize)
+                Text(text = "02/12/2024",fontSize = fontsize)
+                Text(text = "Bug Fix",fontSize = fontsize)
+                Text(text = "fix crash, update API key",fontSize = fontsize, color = Color.Gray)
+            }
+        }
+        //end of version block
+
+        Divider(color = Color.LightGray, thickness = 4.dp)
+
+        //version block
+        Column(
+            Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+        ) {
+            Column(
+                Modifier
+                    .padding(padding)
+                //.fillMaxWidth()
+            ){
                 Text(text = "v95.2.1",fontSize = fontsize)
                 Text(text = "08/11/2023",fontSize = fontsize)
                 Text(text = "Feature",fontSize = fontsize)

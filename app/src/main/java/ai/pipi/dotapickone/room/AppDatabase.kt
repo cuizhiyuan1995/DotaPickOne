@@ -11,7 +11,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Heroname::class, Herowinrate::class, Herowith::class, Herovs::class], version = 1)
+@Database(entities = [Heroname::class, Herowinrate::class, Herowith::class, Herovs::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun heronameDao(): HeronameDao
     abstract fun herowinrateDao() : HerowinrateDao
@@ -26,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 synchronized(this) {
                     INSTANCE =
                         Room.databaseBuilder(context,AppDatabase::class.java, "dota2db")
+                            .fallbackToDestructiveMigration()
                             .build()
                 }
             }
