@@ -24,7 +24,7 @@ android {
     defaultConfig {
         applicationId = "ai.pipi.dotapickone"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
 

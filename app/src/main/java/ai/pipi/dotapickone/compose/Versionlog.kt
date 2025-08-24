@@ -41,6 +41,7 @@ fun Versionlog(
                 Text(text = "08/24/2025",fontSize = fontsize)
                 Text(text = "New Feature",fontSize = fontsize)
                 Text(text = "Hero Position Filter added in the topbar",fontSize = fontsize, color = Color.Gray)
+                Text(text = "Update Target API level",fontSize = fontsize, color = Color.Gray)
             }
         }
         //end of version block
