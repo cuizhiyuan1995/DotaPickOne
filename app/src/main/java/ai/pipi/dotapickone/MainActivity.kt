@@ -26,6 +26,11 @@ import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,11 +40,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -76,10 +83,22 @@ class MainActivity : AppCompatActivity() {
         //binding = ActivityMainBinding.inflate(layoutInflater)
         //setContentView(binding.root)
 
+
+
         initialize_checkfetch()
         setContent {
             LoadingDialog()
             val navController = rememberNavController()
+
+            //filters checkboxes
+            var checked1 by remember { mutableStateOf(true) }
+            var checked2 by remember { mutableStateOf(true) }
+            var checked3 by remember { mutableStateOf(true) }
+            var checked4 by remember { mutableStateOf(true) }
+            var checked5 by remember { mutableStateOf(true) }
+            var showMenu by remember { mutableStateOf(false) }
+            Log.d(javaClass.simpleName, "checked1 value: " + checked1)
+
             Scaffold(
                 bottomBar = {
                     BottomNavigation {
@@ -112,7 +131,70 @@ class MainActivity : AppCompatActivity() {
                             )
                         }
                     }
+                },
+                topBar = {
+                    TopAppBar(
+                        title = { Text("PickOne") },
+                        actions = {
+                            // Menu button (three dots)
+                            IconButton(onClick = { showMenu = !showMenu }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.filter_alt_24px),
+                                    contentDescription = "Filter"
+                                )
+                            }
+
+                            DropdownMenu(
+                                expanded = showMenu,
+                                onDismissRequest = {
+                                    showMenu = false
+                                    val selected = listOf(checked1,checked2,checked3,checked4,checked5)
+                                    dashviewModel.addFilter(selected)
+                                }
+                            ) {
+                                Column(
+                                    modifier = Modifier.padding(8.dp)
+                                ) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(checked = checked1, onCheckedChange = { checked1 = it })
+                                        Text("Position1 - Carry")
+                                    }
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(checked = checked2, onCheckedChange = { checked2 = it })
+                                        Text("Position2 - Mid")
+                                    }
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(checked = checked3, onCheckedChange = { checked3 = it })
+                                        Text("Position3 - Offline")
+                                    }
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(checked = checked4, onCheckedChange = { checked4 = it })
+                                        Text("Position4 - Soft Support")
+                                    }
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Checkbox(checked = checked5, onCheckedChange = { checked5 = it })
+                                        Text("Position5 - Support")
+                                    }
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    Button(
+                                        onClick = {
+                                            val selected = listOf(checked1,checked2,checked3,checked4,checked5)
+                                            dashviewModel.addFilter(selected)
+                                            showMenu = false
+                                        },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        Text("Apply")
+                                    }
+                                }
+                            }
+
+                        }
+                    )
                 }
+
             ) { innerPadding ->
                 NavHost(navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)){
                     composable(route = "SCREEN_HOME") {

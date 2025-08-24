@@ -26,6 +26,26 @@ fun Versionlog(
             .fillMaxHeight()
             .background(color = Color.LightGray)
     ) {
+        //version block
+        Column(
+            Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+        ) {
+            Column(
+                Modifier
+                    .padding(padding)
+                //.fillMaxWidth()
+            ){
+                Text(text = "v95.4.0",fontSize = fontsize)
+                Text(text = "08/24/2025",fontSize = fontsize)
+                Text(text = "New Feature",fontSize = fontsize)
+                Text(text = "Hero Position Filter added in the topbar",fontSize = fontsize, color = Color.Gray)
+            }
+        }
+        //end of version block
+
+        Divider(color = Color.LightGray, thickness = 4.dp)
 
         //version block
         Column(
@@ -82,7 +102,7 @@ fun Versionlog(
             ){
                 Text(text = "v95.2.1",fontSize = fontsize)
                 Text(text = "08/11/2023",fontSize = fontsize)
-                Text(text = "Feature",fontSize = fontsize)
+                Text(text = "New Feature",fontSize = fontsize)
                 Text(text = "optimized UI structure",fontSize = fontsize, color = Color.Gray)
                 Text(text = "add open source information",fontSize = fontsize, color = Color.Gray)
             }
@@ -125,7 +145,7 @@ fun Versionlog(
             ){
                 Text(text = "v95.1.1",fontSize = fontsize)
                 Text(text = "12/25/2022",fontSize = fontsize)
-                Text(text = "Feature",fontSize = fontsize)
+                Text(text = "New Feature",fontSize = fontsize)
                 Text(text = "first version",fontSize = fontsize)
                 Text(text = "home tab selects teammates and opponent heroes",fontSize = fontsize, color = Color.Gray)
                 Text(text = "winrate tab displays heroes to be chosen",fontSize = fontsize, color = Color.Gray)
@@ -133,6 +153,8 @@ fun Versionlog(
             }
         }
         //end of version block
+
+
     }
 
 }

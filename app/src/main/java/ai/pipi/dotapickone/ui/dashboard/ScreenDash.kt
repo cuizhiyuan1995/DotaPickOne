@@ -43,7 +43,7 @@ fun ScreenDash(
         //Log.d(javaClass.simpleName,it.toString())
         val list_removechosen_temp = mutableListOf<Heroname>()
         for(heroname in heronames!!){
-            if(!dashviewModel.checkchosen(heroname.stratzId)){
+            if(!dashviewModel.checkchosen(heroname.stratzId) and !dashviewModel.checkfiltered(heroname.stratzId)){
                 list_removechosen_temp.add(heroname)
             }
         }
@@ -87,7 +87,7 @@ fun ScreenDash(
                         //Log.d(javaClass.simpleName,it.toString())
                         val list_removechosen_temp = mutableListOf<Heroname>()
                         for(heroname in heronames!!){
-                            if(!dashviewModel.checkchosen(heroname.stratzId)){
+                            if(!dashviewModel.checkchosen(heroname.stratzId) and !dashviewModel.checkfiltered(heroname.stratzId)){
                                 list_removechosen_temp.add(heroname)
                             }
                         }
@@ -139,7 +139,7 @@ fun ScreenDash(
                         //Log.d(javaClass.simpleName,it.toString())
                         val list_removechosen_temp = mutableListOf<Heroname>()
                         for(heroname in heronames!!){
-                            if(!dashviewModel.checkchosen(heroname.stratzId)){
+                            if(!dashviewModel.checkchosen(heroname.stratzId) and !dashviewModel.checkfiltered(heroname.stratzId)){
                                 list_removechosen_temp.add(heroname)
                             }
                         }
@@ -190,7 +190,7 @@ fun ScreenDash(
                         //Log.d(javaClass.simpleName,it.toString())
                         val list_removechosen_temp = mutableListOf<Heroname>()
                         for(heroname in heronames!!){
-                            if(!dashviewModel.checkchosen(heroname.stratzId)){
+                            if(!dashviewModel.checkchosen(heroname.stratzId) and !dashviewModel.checkfiltered(heroname.stratzId)){
                                 list_removechosen_temp.add(heroname)
                             }
                         }

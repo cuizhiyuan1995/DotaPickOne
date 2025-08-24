@@ -93,6 +93,10 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     //loading
     private val finishloading = MutableLiveData<Boolean>()
 
+    //for fetching filter
+    val hero = Hero()
+    private var heroPositionFilter = MutableList(5){true}
+
 
     fun startinit() {
         Log.d(javaClass.simpleName,"dashviewmodel start init")
@@ -362,6 +366,16 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         Log.d(javaClass.simpleName,"dire stratz order list: " + dlist_sorder)
     }
 
+    //set Filter
+    fun addFilter(positionFilter:List<Boolean>)=
+        viewModelScope.launch(context = viewModelScope.coroutineContext + Dispatchers.IO){
+            //positionFilter is a List of length five, each element indicate pos1,2,3,4,5
+            heroPositionFilter = positionFilter.toMutableList()
+            Log.d(javaClass.simpleName,"add filter: " + heroPositionFilter)
+            setrlist_sorder()
+            getfinallist()
+        }
+
     private fun getfinallist(){
         //R_total = RaRbRc/RfRgRh * CabCac * DafDagDah
         var result = herowinratemultik.copy()
@@ -469,6 +483,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+
     //don't display chosen hero in dashboard list, true means chosen, false means not chosen
     fun checkchosen(stratzId: Int):Boolean{
         if(radiantherolist.contains(stratzId) or direherolist.contains(stratzId)){
@@ -477,6 +492,25 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         }
         else{
             return false
+        }
+    }
+
+    //don't display filtered hero in dashboard list, true means filtered out, false means not filtered out
+    fun checkfiltered(stratzId: Int):Boolean{
+        val heroPosition = hero.fetchPosition(stratzId)
+        if(heroPosition.isNotEmpty()){
+            for (i in 1..5) {
+                if(heroPositionFilter[i - 1] and (i in heroPosition)){
+                    Log.d(javaClass.simpleName,stratzId.toString() + " has position " + i)
+                    return false
+                }
+            }
+            Log.d(javaClass.simpleName,stratzId.toString() + " filtered out by " + heroPositionFilter)
+            return true
+        }
+        else{
+            Log.d(javaClass.simpleName,stratzId.toString() + " doesn't have position")
+            return true
         }
     }
 

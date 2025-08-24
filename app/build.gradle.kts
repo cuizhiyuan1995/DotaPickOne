@@ -16,7 +16,7 @@ plugins {
 android {
 
     val versionMajor = 95
-    val versionMinor = 3
+    val versionMinor = 4
     val versionPatch = 0
 
     compileSdk = 34
@@ -75,6 +75,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation ("androidx.navigation:navigation-ui-ktx:2.5.3")
     implementation ("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.compose.material3:material3-android:1.3.2")
 
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")
