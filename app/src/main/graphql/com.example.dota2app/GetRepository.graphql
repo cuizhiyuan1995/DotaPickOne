@@ -14,6 +14,15 @@ query DotaAppQuery($matchLimit: Int) {
     m137: heroVsHeroMatchup(heroId: 137, matchLimit: $matchLimit) {
         ...advan_disadvan
     }
+    m138: heroVsHeroMatchup(heroId: 138, matchLimit: $matchLimit) {
+                  ...advan_disadvan
+    }
+    m131: heroVsHeroMatchup(heroId: 131, matchLimit: $matchLimit) {
+                      ...advan_disadvan
+    }
+    m145: heroVsHeroMatchup(heroId: 145, matchLimit: $matchLimit) {
+                      ...advan_disadvan
+    }
   }
   constants {
     heroes {

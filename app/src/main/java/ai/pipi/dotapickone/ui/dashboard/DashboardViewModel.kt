@@ -1,6 +1,7 @@
 package ai.pipi.dotapickone.ui.dashboard
 
 import ai.pipi.dotapickone.DotaAppQuery
+import ai.pipi.dotapickone.Hero
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
@@ -31,6 +32,7 @@ enum class SortColumn_value {
 }
 data class SortInfo(val sortColumn: SortColumn_value, val ascending: Boolean)
 
+//class DashboardViewModel(application: Application) : AndroidViewModel(application)
 class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _text = MutableLiveData<String>().apply {
@@ -53,7 +55,10 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     private lateinit var herowithDao : HerowithDao
     private lateinit var herovsDao : HerovsDao
     private lateinit var herowinrateDao : HerowinrateDao
-    private lateinit var heroname_live : LiveData<List<Heroname>>
+    private lateinit var _heroname_live : LiveData<List<Heroname>>
+
+    val heroname_live : LiveData<List<Heroname>>
+        get() = _heroname_live
 
 
     //matrix variables
@@ -62,18 +67,35 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     //private val herovsmatrix = mutableListOf<List<Float>>()
     //private lateinit var herovsmultik : D2Array<Float>
     //private var herowinratevector = listOf<Float>()
+    private val herocounts = Hero().getlength()
     private lateinit var herowinratemultik : D1Array<Float>
-    private val onemultik = mk.ones<Float>(123,123)
-    private val onelinemultik = mk.ones<Float>(123)
+    private val onemultik = mk.ones<Float>(herocounts,herocounts)
+    private val onelinemultik = mk.ones<Float>(herocounts)
     private lateinit var coordinateindex : D2Array<Float>
     private lateinit var counterindex : D2Array<Float>
 
     //dashboard sort
-    private var sortInfo = MutableLiveData(
+    private var _sortInfo = MutableLiveData(
         SortInfo(SortColumn_value.Winrate, false))
+
+    val sortInfo : LiveData<SortInfo>
+        get() = _sortInfo
+
+    //network check
+    private val networkonline = MutableLiveData<Boolean>()
+    fun set_network(online:Boolean){
+        networkonline.postValue(online)
+    }
+    fun observe_network():LiveData<Boolean>{
+        return networkonline
+    }
 
     //loading
     private val finishloading = MutableLiveData<Boolean>()
+
+    //for fetching filter
+    val hero = Hero()
+    private var heroPositionFilter = MutableList(5){true}
 
 
     fun startinit() {
@@ -90,7 +112,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
             initstratzorder()
             getfinallist()
 
-            heroname_live = heronameDao.getHeroSortByDescWin_live()
+            _heroname_live = heronameDao.getHeroSortByDescWin_live()
 
             finishloading.postValue(true)
 
@@ -165,18 +187,23 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun setradiantordire(rord:Boolean){
         radiantordire.postValue(rord)
+        Log.d(javaClass.simpleName,"radiant tapped")
     }
 
     fun observe_heroname():LiveData<List<Heroname>>{
-        return heroname_live
+        return _heroname_live
     }
 
     fun observe_sortinfo():LiveData<SortInfo>{
-        return sortInfo
+        return _sortInfo
     }
 
     fun observe_finishloading():LiveData<Boolean>{
         return finishloading
+    }
+
+    fun set_finishloading(finish: Boolean){
+        finishloading.postValue(finish)
     }
 
 
@@ -245,6 +272,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         //calculate Ratio of two heros as teammate
         val herowiths = herowithDao.getAll()
         val herowithmatrix = mutableListOf<List<Float>>()
+        Log.d(javaClass.simpleName,"herowithsize:" + herowiths.size)
         for(herowith in herowiths){
             herowithmatrix.add(herowith.tolist())
         }
@@ -256,6 +284,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         //calculate Ratio of two heros as opponent
         val herovss = herovsDao.getAll()
         val herovsmatrix = mutableListOf<List<Float>>()
+        Log.d(javaClass.simpleName,"herovssize:" + herovss.size)
         for(herovs in herovss){
             herovsmatrix.add(herovs.tolist())
         }
@@ -273,8 +302,8 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         Log.d(javaClass.simpleName,"winratemultikcomplete,size: " + herowinratemultik.shape.get(0))
 
         //calculate Ratio_i * Ratio_j matrix
-        val winratearray = Array(123){herowinratevector.toFloatArray()}
-        val winratecolarray = Array(123) { i -> FloatArray(123){herowinratevector.get(i)} }
+        val winratearray = Array(herocounts){herowinratevector.toFloatArray()}
+        val winratecolarray = Array(herocounts) { i -> FloatArray(herocounts){herowinratevector.get(i)} }
         var winratemultik = mk.ndarray(winratearray)
         var winratecolmultik = mk.ndarray(winratecolarray)
         winratemultik = onemultik/winratemultik - onemultik             //every row is herowinrate ratio
@@ -337,25 +366,35 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         Log.d(javaClass.simpleName,"dire stratz order list: " + dlist_sorder)
     }
 
+    //set Filter
+    fun addFilter(positionFilter:List<Boolean>)=
+        viewModelScope.launch(context = viewModelScope.coroutineContext + Dispatchers.IO){
+            //positionFilter is a List of length five, each element indicate pos1,2,3,4,5
+            heroPositionFilter = positionFilter.toMutableList()
+            Log.d(javaClass.simpleName,"add filter: " + heroPositionFilter)
+            setrlist_sorder()
+            getfinallist()
+        }
+
     private fun getfinallist(){
         //R_total = RaRbRc/RfRgRh * CabCac * DafDagDah
         var result = herowinratemultik.copy()
         var result_noindex = herowinratemultik.copy()
         for(sorder in rlist_sorder){
             val temp = herowinratemultik[sorder]
-            val Ratio_sorder = mk.d1array(123){temp}
+            val Ratio_sorder = mk.d1array(herocounts){temp}
             //println(Ratio_sorder)
             result = result * Ratio_sorder
             result_noindex = result_noindex * Ratio_sorder
-            result = result * coordinateindex[0..123,sorder]
+            result = result * coordinateindex[0..herocounts,sorder]
         }
         for(sorder in dlist_sorder){
             val temp = herowinratemultik[sorder]
-            val Ratio_sorder = mk.d1array(123){temp}
+            val Ratio_sorder = mk.d1array(herocounts){temp}
             //println(Ratio_sorder)
             result = result / Ratio_sorder
             result_noindex = result_noindex / Ratio_sorder
-            result = result * counterindex[0..123,sorder]
+            result = result * counterindex[0..herocounts,sorder]
         }
         //change losewin ration to winrate,calculate index store in result_noindex
         result_noindex = (result_noindex - result)/(result + onelinemultik)
@@ -373,8 +412,10 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
             for((count, heroname) in heronames.withIndex()){
                 heroname.predicted_winrate = list1[count]
                 heroname.withvs_index = list2[count]
-                Log.d(javaClass.simpleName,"updatewinrate${count}: " + heroname.predicted_winrate)
-                Log.d(javaClass.simpleName,"updateindex${count}: " + heroname.withvs_index)
+                //Log.d(javaClass.simpleName,"updateid${count}: " + heroname.stratzId)
+                //Log.d(javaClass.simpleName,"updatehero${count}: " + heroname.displayName)
+                //Log.d(javaClass.simpleName,"updatewinrate${count}: " + heroname.predicted_winrate)
+                //Log.d(javaClass.simpleName,"updateindex${count}: " + heroname.withvs_index)
                 heronameDao.updateHeroname(heroname)
         }
     }
@@ -395,52 +436,53 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
     fun sortInfoClick(input_sortColumn: SortColumn_value) {
         // XXX User has changed sort info
         Log.d(javaClass.simpleName,"sortinfobefore:" + sortInfo.value.toString())
-        if(sortInfo.value != null){
-            if(input_sortColumn != sortInfo.value!!.sortColumn){        //tap other tab
+        if(_sortInfo.value != null){
+            if(input_sortColumn != _sortInfo.value!!.sortColumn){        //tap other tab
                 if (input_sortColumn == SortColumn_value.Heroname){
-                    sortInfo.setValue(SortInfo(input_sortColumn,true))
+                    _sortInfo.setValue(SortInfo(input_sortColumn,true))
                 }
                 else{
-                    sortInfo.setValue(SortInfo(input_sortColumn,false))
+                    _sortInfo.setValue(SortInfo(input_sortColumn,false))
                 }
             }
             else{
-                val upanddown = !sortInfo.value!!.ascending             //tap same tab
-                sortInfo.setValue(SortInfo(input_sortColumn,upanddown))
+                val upanddown = !_sortInfo.value!!.ascending             //tap same tab
+                _sortInfo.setValue(SortInfo(input_sortColumn,upanddown))
             }
         }
-        Log.d(javaClass.simpleName,"sortinfoafter:" + sortInfo.value.toString())
+        Log.d(javaClass.simpleName,"sortinfoafter:" + _sortInfo.value.toString())
 
-        when(sortInfo.value){
+        when(_sortInfo.value){
             SortInfo(SortColumn_value.Heroname,true)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_AscName")
-                heroname_live = heronameDao.getHeroSortByAscName_live()
+                _heroname_live = heronameDao.getHeroSortByAscName_live()
             }
             SortInfo(SortColumn_value.Heroname,false)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_DescName")
-                heroname_live = heronameDao.getHeroSortByDescName_live()
+                _heroname_live = heronameDao.getHeroSortByDescName_live()
             }
             SortInfo(SortColumn_value.Winrate,true)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_AscWin")
-                heroname_live = heronameDao.getHeroSortByAscWin_live()
+                _heroname_live = heronameDao.getHeroSortByAscWin_live()
             }
             SortInfo(SortColumn_value.Winrate,false)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_DescWin")
-                heroname_live = heronameDao.getHeroSortByDescWin_live()
+                _heroname_live = heronameDao.getHeroSortByDescWin_live()
             }
             SortInfo(SortColumn_value.Rate,true)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_AscRate")
-                heroname_live = heronameDao.getHeroSortByAscRate_live()
+                _heroname_live = heronameDao.getHeroSortByAscRate_live()
             }
             SortInfo(SortColumn_value.Rate,false)->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_DescRate")
-                heroname_live = heronameDao.getHeroSortByDescRate_live()
+                _heroname_live = heronameDao.getHeroSortByDescRate_live()
             }
             else->{
                 Log.d(javaClass.simpleName,"sorinfoclick_changeheronamelive_error")
             }
         }
     }
+
 
     //don't display chosen hero in dashboard list, true means chosen, false means not chosen
     fun checkchosen(stratzId: Int):Boolean{
@@ -450,6 +492,25 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         }
         else{
             return false
+        }
+    }
+
+    //don't display filtered hero in dashboard list, true means filtered out, false means not filtered out
+    fun checkfiltered(stratzId: Int):Boolean{
+        val heroPosition = hero.fetchPosition(stratzId)
+        if(heroPosition.isNotEmpty()){
+            for (i in 1..5) {
+                if(heroPositionFilter[i - 1] and (i in heroPosition)){
+                    Log.d(javaClass.simpleName,stratzId.toString() + " has position " + i)
+                    return false
+                }
+            }
+            Log.d(javaClass.simpleName,stratzId.toString() + " filtered out by " + heroPositionFilter)
+            return true
+        }
+        else{
+            Log.d(javaClass.simpleName,stratzId.toString() + " doesn't have position")
+            return true
         }
     }
 
