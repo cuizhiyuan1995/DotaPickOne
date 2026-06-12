@@ -52,6 +52,7 @@ class Hero {
             "Keeper_of_the_Light",
             "Kez",
             "Kunkka",
+            "Largo",
             "Legion_Commander",
             "Leshrac",
             "Lich",
@@ -260,6 +261,7 @@ class Hero {
             137 to listOf(2,3),
             138 to listOf(1,4),
             145 to listOf(1,2),
+            155 to listOf(3,4,5)
         )
     }
 

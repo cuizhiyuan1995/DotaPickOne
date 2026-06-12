@@ -26,6 +26,49 @@ fun Versionlog(
             .fillMaxHeight()
             .background(color = Color.LightGray)
     ) {
+
+        //version block
+        Column(
+            Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+        ) {
+            Column(
+                Modifier
+                    .padding(padding)
+                //.fillMaxWidth()
+            ){
+                Text(text = "v95.5.0",fontSize = fontsize)
+                Text(text = "06/11/2026",fontSize = fontsize)
+                Text(text = "Bug Fix",fontSize = fontsize)
+                Text(text = "fix crash, add Largo",fontSize = fontsize, color = Color.Gray)
+            }
+        }
+        //end of version block
+
+        Divider(color = Color.LightGray, thickness = 4.dp)
+
+        //version block
+        Column(
+            Modifier
+                .background(color = Color.White)
+                .fillMaxWidth()
+        ) {
+            Column(
+                Modifier
+                    .padding(padding)
+                //.fillMaxWidth()
+            ){
+                Text(text = "v95.4.1",fontSize = fontsize)
+                Text(text = "10/04/2025",fontSize = fontsize)
+                Text(text = "New Feature",fontSize = fontsize)
+                Text(text = "Support 16KB page sizes",fontSize = fontsize, color = Color.Gray)
+            }
+        }
+        //end of version block
+
+        Divider(color = Color.LightGray, thickness = 4.dp)
+
         //version block
         Column(
             Modifier

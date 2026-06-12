@@ -11,7 +11,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Heroname::class, Herowinrate::class, Herowith::class, Herovs::class], version = 4)
+@Database(entities = [Heroname::class, Herowinrate::class, Herowith::class, Herovs::class], version = 5)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun heronameDao(): HeronameDao
     abstract fun herowinrateDao() : HerowinrateDao

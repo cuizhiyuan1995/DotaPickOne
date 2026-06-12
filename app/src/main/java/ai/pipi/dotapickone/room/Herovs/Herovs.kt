@@ -132,5 +132,6 @@ data class Herovs (
     @ColumnInfo(name = "136") val w136: Float,
     @ColumnInfo(name = "137") val w137: Float,
     @ColumnInfo(name = "138") val w138: Float,
-    @ColumnInfo(name = "145") val w145: Float
+    @ColumnInfo(name = "145") val w145: Float,
+    @ColumnInfo(name = "155") val w155: Float
 )
