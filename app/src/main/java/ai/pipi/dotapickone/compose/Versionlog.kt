@@ -42,6 +42,7 @@ fun Versionlog(
                 Text(text = "06/11/2026",fontSize = fontsize)
                 Text(text = "Bug Fix",fontSize = fontsize)
                 Text(text = "fix crash, add Largo",fontSize = fontsize, color = Color.Gray)
+                Text(text = "update datastore library to support 16KB page size",fontSize = fontsize, color = Color.Gray)
             }
         }
         //end of version block

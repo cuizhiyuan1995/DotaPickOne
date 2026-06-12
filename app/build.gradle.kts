@@ -17,7 +17,7 @@ android {
 
     val versionMajor = 95
     val versionMinor = 5
-    val versionPatch = 0
+    val versionPatch = 1
 
     compileSdk = 34
 
@@ -85,7 +85,7 @@ dependencies {
     implementation ("androidx.core:core-splashscreen:1.0.0")
 
     //datastore
-    implementation ("androidx.datastore:datastore-preferences:1.1.0-alpha01")
+    implementation ("androidx.datastore:datastore-preferences:1.1.0")
 
     //graphql
     implementation("com.apollographql.apollo3:apollo-runtime:3.7.2")
